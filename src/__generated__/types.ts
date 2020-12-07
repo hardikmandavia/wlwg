@@ -16,11 +16,18 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   summoner: Summoner;
+  matchList: MatchList;
 };
 
 
 export type QuerySummonerArgs = {
   name: Scalars['String'];
+  region: Scalars['String'];
+};
+
+
+export type QueryMatchListArgs = {
+  accountId: Scalars['String'];
   region: Scalars['String'];
 };
 
@@ -52,6 +59,26 @@ export type LeagueEntry = {
   veteran: Scalars['Boolean'];
   freshBlood: Scalars['Boolean'];
   inactive: Scalars['Boolean'];
+};
+
+export type MatchList = {
+  __typename?: 'MatchList';
+  startIndex: Scalars['Float'];
+  totalGames: Scalars['Float'];
+  endIndex: Scalars['Float'];
+  matches: Array<MatchReference>;
+};
+
+export type MatchReference = {
+  __typename?: 'MatchReference';
+  gameId: Scalars['String'];
+  role: Scalars['String'];
+  season: Scalars['Float'];
+  platformId: Scalars['String'];
+  champion: Scalars['Float'];
+  queue: Scalars['Float'];
+  lane: Scalars['String'];
+  timestamp: Scalars['Float'];
 };
 
 export type SummonerQueryVariables = Exact<{

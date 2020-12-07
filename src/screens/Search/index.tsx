@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, TextInputSubmitEditingEventData, NativeSyntheticEvent, Text } from 'react-native';
+import { Animated } from 'react-native';
 
-import { PropsWithNavigation, Routes } from '../../../roots';
+import { PropsWithNavigation, Routes } from '../../../routes';
 
 import Logo from '../../components/Logo';
 import Picker from '../../components/Picker';
 import Results from './Results';
+import { Screen } from '../../components/Common';
 
-import { Input, Screen, Header } from './index.styled';
+import { Input, Header } from './index.styled';
 
 type Props = PropsWithNavigation<{}, Routes.SEARCH>;
 
@@ -25,6 +26,8 @@ const Home = ({ navigation }: Props) => {
     fadeAnim.setValue(150);
     setFocus(false);
   }
+
+  const handleSelect = (accountId: string, id: string) => navigation.navigate(Routes.SUMMONER, { region, accountId, id });
 
   useEffect(() => {
     if (focussed) {
@@ -53,14 +56,16 @@ const Home = ({ navigation }: Props) => {
           width={80}
         />
       </Header>
-      {name === '' && <Animated.View
-        style={{
-          height: focussed ? fadeAnim : 150,
-          overflow: 'hidden'
-        }}
-      >
-        <Logo width={150} height={150} />
-      </Animated.View>}
+      {name === '' && (
+        <Animated.View
+          style={{
+            height: focussed ? fadeAnim : 150,
+            overflow: 'hidden'
+          }}
+        >
+          <Logo width={150} height={150} />
+        </Animated.View>
+      )}
       <Input
         keyboardType="web-search"
         value={name}
@@ -70,7 +75,11 @@ const Home = ({ navigation }: Props) => {
         onBlur={handleBlur}
       />
       {name > '' && !focussed && (
-        <Results name={name} region={region} />
+        <Results
+          name={name}
+          region={region}
+          onSelect={handleSelect}
+        />
       )}
     </Screen>
   );

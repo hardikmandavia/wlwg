@@ -3,7 +3,9 @@ import { NavigationProp, RouteProp } from "@react-navigation/native";
 export type RootStackParamList = {
   SEARCH: undefined;
   SUMMONER: {
-    summonerName: string;
+    region: string;
+    accountId: string;
+    id: string;
   };
 };
 

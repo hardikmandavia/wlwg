@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { background, primary, text } from '../../../colors';
+import { primary, text } from '../../../colors';
 
 export const Button = styled.TouchableOpacity`
   width: 100%;
@@ -24,14 +24,6 @@ export const Input = styled.TextInput`
   background-color: white;
   border-radius: 25px;
   padding: 5px 20px;
-`;
-
-export const Screen = styled.View`
-  flex: 1;
-  background-color: ${background};
-  justify-content: flex-start;
-  align-items: center;
-  padding: 40px;
 `;
 
 export const Header = styled.View`

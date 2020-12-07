@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import { neutral, secondary, text, background, textLight, success, error } from '../../../../colors';
 
-const Container = styled.TouchableOpacity`
+const Container = styled.View`
   margin: 10px;
   width: 100%;
   border-radius: 10px;
