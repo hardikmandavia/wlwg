@@ -1,0 +1,17 @@
+query Summoner($region: String!, $name: String!) {
+  summoner(region: $region, name: $name) {
+    id
+    accountId
+    name
+    profileIconId
+    summonerLevel
+    ranked {
+      queueType
+      tier
+      rank
+      leaguePoints
+      wins
+      losses
+    }
+  }
+}

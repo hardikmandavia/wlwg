@@ -1,14 +1,8 @@
 import styled from 'styled-components/native';
 
-import { background, secondary } from './colors';
+import { background } from './colors';
 
-export const View = styled.View`
+export const View = styled.SafeAreaView`
   flex: 1;
   background-color: ${background};
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Text = styled.Text`
-  color: ${secondary};
 `;

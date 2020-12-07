@@ -34,6 +34,24 @@ export type Summoner = {
   revisionDate: Scalars['Float'];
   summonerLevel: Scalars['Float'];
   region: Scalars['String'];
+  ranked: Array<LeagueEntry>;
+};
+
+export type LeagueEntry = {
+  __typename?: 'LeagueEntry';
+  leagueId: Scalars['String'];
+  summonerId: Scalars['String'];
+  summonerName: Scalars['String'];
+  queueType: Scalars['String'];
+  tier: Scalars['String'];
+  rank: Scalars['String'];
+  leaguePoints: Scalars['Float'];
+  wins: Scalars['Float'];
+  losses: Scalars['Float'];
+  hotStreak: Scalars['Boolean'];
+  veteran: Scalars['Boolean'];
+  freshBlood: Scalars['Boolean'];
+  inactive: Scalars['Boolean'];
 };
 
 export type SummonerQueryVariables = Exact<{
@@ -46,7 +64,11 @@ export type SummonerQuery = (
   { __typename?: 'Query' }
   & { summoner: (
     { __typename?: 'Summoner' }
-    & Pick<Summoner, 'id' | 'accountId' | 'name'>
+    & Pick<Summoner, 'id' | 'accountId' | 'name' | 'profileIconId' | 'summonerLevel'>
+    & { ranked: Array<(
+      { __typename?: 'LeagueEntry' }
+      & Pick<LeagueEntry, 'queueType' | 'tier' | 'rank' | 'leaguePoints' | 'wins' | 'losses'>
+    )> }
   ) }
 );
 
@@ -57,6 +79,16 @@ export const SummonerDocument = gql`
     id
     accountId
     name
+    profileIconId
+    summonerLevel
+    ranked {
+      queueType
+      tier
+      rank
+      leaguePoints
+      wins
+      losses
+    }
   }
 }
     `;

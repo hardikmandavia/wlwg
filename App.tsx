@@ -1,19 +1,22 @@
 import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject, ApolloProvider } from '@apollo/client';
 import React from 'react';
-import { Platform } from 'react-native';
-import Config from 'react-native-config';
-import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+import Search from './src/screens/Search';
 
-import { View, Text } from './App.styled';
+import { RootStackParamList, Routes } from './roots';
 
+import { View } from './App.styled';
+
+const Stack = createStackNavigator<RootStackParamList>();
+const { Navigator, Screen } = Stack;
+
+const uri = `http://192.168.0.7:4001`
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: Platform.select({
-    ios: Config.API_ENDPOINT_IOS,
-    android: Config.API_ENDPOINT_ANDROID
-  })
+  uri
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
@@ -24,10 +27,13 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <View>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+        <View>
+          <Navigator headerMode="none">
+            <Screen name={Routes.SEARCH} component={Search} />
+          </Navigator>
+        </View>
+      </NavigationContainer>
     </ApolloProvider>
   );
 }
