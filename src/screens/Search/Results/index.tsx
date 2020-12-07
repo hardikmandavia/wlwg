@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -13,6 +13,7 @@ import {
   Image,
   LevelContainer,
   LevelText,
+  LoadingContainer,
   NameContainer,
   NameText,
   Text,
@@ -78,6 +79,11 @@ const Results = ({ region, name, onSelect }: Props) => {
     );
   }
 
+  if (loading) return (
+    <LoadingContainer>
+      <ActivityIndicator />
+    </LoadingContainer>
+  );
   if (error) return renderError();
   if (data) return renderSummoner(data);
   return null;

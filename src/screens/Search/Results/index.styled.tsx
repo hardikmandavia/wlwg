@@ -55,6 +55,11 @@ export const LevelText = styled.Text`
   font-size: 10px;
 `;
 
+export const LoadingContainer = styled(Container)`
+  justify-content: center;
+  align-items: center;
+`;
+
 export const NameContainer = styled(Container)`
   flex: 2;
   flex-direction: column;
