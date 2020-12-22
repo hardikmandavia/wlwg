@@ -31,4 +31,5 @@ export const Header = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  z-index: 1000;
 `;

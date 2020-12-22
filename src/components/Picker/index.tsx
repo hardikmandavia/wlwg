@@ -29,7 +29,7 @@ const Picker = ({
       defaultValue={value}
       containerStyle={{
         height: 40,
-        width: width || 100
+        width: width || 100,
       }}
       style={{
         backgroundColor: background,

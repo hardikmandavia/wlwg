@@ -81,6 +81,24 @@ export type MatchReference = {
   timestamp: Scalars['Float'];
 };
 
+export type MatchListQueryVariables = Exact<{
+  region: Scalars['String'];
+  accountId: Scalars['String'];
+}>;
+
+
+export type MatchListQuery = (
+  { __typename?: 'Query' }
+  & { matchList: (
+    { __typename?: 'MatchList' }
+    & Pick<MatchList, 'startIndex' | 'totalGames' | 'endIndex'>
+    & { matches: Array<(
+      { __typename?: 'MatchReference' }
+      & Pick<MatchReference, 'gameId' | 'role' | 'queue' | 'champion' | 'lane' | 'timestamp'>
+    )> }
+  ) }
+);
+
 export type SummonerQueryVariables = Exact<{
   region: Scalars['String'];
   name: Scalars['String'];
@@ -100,6 +118,50 @@ export type SummonerQuery = (
 );
 
 
+export const MatchListDocument = gql`
+    query MatchList($region: String!, $accountId: String!) {
+  matchList(region: $region, accountId: $accountId) {
+    startIndex
+    totalGames
+    endIndex
+    matches {
+      gameId
+      role
+      queue
+      champion
+      lane
+      timestamp
+    }
+  }
+}
+    `;
+
+/**
+ * __useMatchListQuery__
+ *
+ * To run a query within a React component, call `useMatchListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMatchListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMatchListQuery({
+ *   variables: {
+ *      region: // value for 'region'
+ *      accountId: // value for 'accountId'
+ *   },
+ * });
+ */
+export function useMatchListQuery(baseOptions: Apollo.QueryHookOptions<MatchListQuery, MatchListQueryVariables>) {
+        return Apollo.useQuery<MatchListQuery, MatchListQueryVariables>(MatchListDocument, baseOptions);
+      }
+export function useMatchListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MatchListQuery, MatchListQueryVariables>) {
+          return Apollo.useLazyQuery<MatchListQuery, MatchListQueryVariables>(MatchListDocument, baseOptions);
+        }
+export type MatchListQueryHookResult = ReturnType<typeof useMatchListQuery>;
+export type MatchListLazyQueryHookResult = ReturnType<typeof useMatchListLazyQuery>;
+export type MatchListQueryResult = Apollo.QueryResult<MatchListQuery, MatchListQueryVariables>;
 export const SummonerDocument = gql`
     query Summoner($region: String!, $name: String!) {
   summoner(region: $region, name: $name) {

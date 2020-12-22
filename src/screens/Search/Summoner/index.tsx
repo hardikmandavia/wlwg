@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import { RegionContext, SummonerContext } from '../../../contexts';
 import { useSummonerQuery, SummonerQuery, LeagueEntry, Summoner } from '../../../__generated__/types';
-
 import { getSoloRanked, getIcon } from '../../../selectors/ranked';
+
+import { Text } from '../../../components/Common';
 
 import {
   ErrorContainer,
   IconContainer,
   Image,
   LevelContainer,
-  LevelText,
   LoadingContainer,
   NameContainer,
-  NameText,
-  Text,
   RankedImage,
   RankedImageContainer,
-  RankedText,
   ResultContainer,
   WinRateContainer
 } from './index.styled';
 
 interface Props {
-  region: string;
   name: string;
   onSelect: (accountId: string, id: string) => void;
 }
 
-const Results = ({ region, name, onSelect }: Props) => {
+const Results = ({ name, onSelect }: Props) => {
+  const { region } = RegionContext.useRegionContext();
   const { data, loading, error } = useSummonerQuery({ variables: { region, name } });
+  const { setSummoner } = SummonerContext.useSummonerContext();
+
+  useEffect(() => {
+    setSummoner(data?.summoner as Summoner)
+  }, [data]);
 
   const renderError = () => (
     <ErrorContainer>
@@ -43,7 +45,8 @@ const Results = ({ region, name, onSelect }: Props) => {
   const renderSummoner = ({ summoner }: SummonerQuery) => {
     const soloq = getSoloRanked(summoner.ranked as LeagueEntry[]);
     const winRate = soloq ? +((soloq.wins / (soloq.wins + soloq.losses)) * 100).toFixed(1) : undefined;
-    const winRateColor = winRate ? winRate > 50 ? 'win' : 'loss' : undefined
+    const winRateColor = winRate ? winRate > 50 ? 'win' : 'loss' : undefined;
+
     return (
       <TouchableOpacity onPress={() => onSelect(summoner.accountId, summoner.id)}>
         <ResultContainer >
@@ -52,13 +55,13 @@ const Results = ({ region, name, onSelect }: Props) => {
               source={{ uri: `http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/${summoner.profileIconId}.png` }}
             />
             <LevelContainer>
-              <LevelText>
+              <Text color="light" size="small">
                 {summoner.summonerLevel}
-              </LevelText>
+              </Text>
             </LevelContainer>
           </IconContainer>
           <NameContainer>
-            <NameText>{summoner.name}</NameText>
+            <Text size="large">{summoner.name}</Text>
             <WinRateContainer>
               <Text margin="0 10px 0 0">W: {soloq?.wins || '-'}</Text>
               <Text margin="0 10px 0 0">L: {soloq?.losses || '-'}</Text>
@@ -69,8 +72,8 @@ const Results = ({ region, name, onSelect }: Props) => {
             <RankedImage source={getIcon(soloq?.tier || 'Unranked')} />
             {soloq && (
               <>
-                <RankedText>{soloq.tier} {soloq.rank}</RankedText>
-                <RankedText> LP: {soloq.leaguePoints}</RankedText>
+                <Text size="small">{soloq.tier} {soloq.rank}</Text>
+                <Text size="small"> LP: {soloq.leaguePoints}</Text>
               </>
             )}
           </RankedImageContainer>

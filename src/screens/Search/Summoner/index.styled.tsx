@@ -50,11 +50,6 @@ export const LevelContainer = styled.View`
   border: 1px solid ${secondary};
 `;
 
-export const LevelText = styled.Text`
-  color: ${textLight};
-  font-size: 10px;
-`;
-
 export const LoadingContainer = styled(Container)`
   justify-content: center;
   align-items: center;
@@ -63,11 +58,6 @@ export const LoadingContainer = styled(Container)`
 export const NameContainer = styled(Container)`
   flex: 2;
   flex-direction: column;
-`;
-
-export const NameText = styled.Text`
-  color: ${text};
-  font-size: 18px;
 `;
 
 export const RankedImage = styled.Image`
@@ -82,24 +72,10 @@ export const RankedImageContainer = styled.View`
   justify-content: flex-start;
 `;
 
-export const RankedText = styled.Text`
-  color: ${text};
-  font-size: 10px;
-`;
-
 export const ResultContainer = styled(Container)`
   background-color: ${secondary};
   padding: 5px;
   margin: 40px 0;
-`;
-
-export const Text = styled.Text<{ margin?: string; color?: "win" | "loss"; }>`
-  color: ${(({ color }) => {
-    if (color === "win") return success;
-    if (color === "loss") return error;
-    return text;
-  })}
-  ${(({ margin }) => margin && `margin: ${margin}`)}
 `;
 
 export const WinRateContainer = styled.View`

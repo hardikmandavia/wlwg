@@ -1,0 +1,15 @@
+query MatchList($region: String!, $accountId: String!) {
+  matchList(region: $region, accountId: $accountId) {
+    startIndex
+    totalGames
+    endIndex
+    matches {
+      gameId
+      role
+      queue
+      champion
+      lane
+      timestamp
+    }
+  }
+}

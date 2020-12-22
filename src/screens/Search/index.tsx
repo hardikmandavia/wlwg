@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-import { PropsWithNavigation, Routes } from '../../../routes';
+import { RegionContext, SummonerContext } from '../../contexts';
+import { PropsWithNavigation, Routes } from '../../routes';
 
 import Logo from '../../components/Logo';
 import Picker from '../../components/Picker';
-import Results from './Results';
+import Results from './Summoner';
 import { Screen } from '../../components/Common';
 
 import { Input, Header } from './index.styled';
@@ -13,8 +14,9 @@ import { Input, Header } from './index.styled';
 type Props = PropsWithNavigation<{}, Routes.SEARCH>;
 
 const Home = ({ navigation }: Props) => {
+  const { region, setRegion } = RegionContext.useRegionContext();
+
   const [focussed, setFocus] = useState(false);
-  const [region, setRegion] = useState('EUW1');
   const [name, setName] = useState('');
 
   const fadeAnim = useRef(new Animated.Value(150)).current;
@@ -27,7 +29,7 @@ const Home = ({ navigation }: Props) => {
     setFocus(false);
   }
 
-  const handleSelect = (accountId: string, id: string) => navigation.navigate(Routes.SUMMONER, { region, accountId, id });
+  const handleSelect = (accountId: string, id: string) => navigation.navigate(Routes.SUMMONER, { accountId });
 
   useEffect(() => {
     if (focussed) {
@@ -75,11 +77,12 @@ const Home = ({ navigation }: Props) => {
         onBlur={handleBlur}
       />
       {name > '' && !focussed && (
-        <Results
-          name={name}
-          region={region}
-          onSelect={handleSelect}
-        />
+        <SummonerContext.SummonerContextProvider>
+          <Results
+            name={name}
+            onSelect={handleSelect}
+          />
+        </SummonerContext.SummonerContextProvider>
       )}
     </Screen>
   );

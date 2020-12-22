@@ -4,9 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Search from './src/screens/Search';
-import Summoner from './src/screens/Summoner';
+import Summoner from './src/screens/MatchList';
 
-import { RootStackParamList, Routes } from './routes';
+import { RegionContext } from './src/contexts';
+import { RootStackParamList, Routes } from './src/routes';
 
 import { View } from './App.styled';
 
@@ -30,10 +31,13 @@ export default function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         <View>
-          <Navigator headerMode="none">
-            <Screen name={Routes.SEARCH} component={Search} />
-            <Screen name={Routes.SUMMONER} component={Summoner} />
-          </Navigator>
+
+          <RegionContext.RegionContextProvider>
+            <Navigator headerMode="none">
+              <Screen name={Routes.SEARCH} component={Search} />
+              <Screen name={Routes.SUMMONER} component={Summoner} />
+            </Navigator>
+          </RegionContext.RegionContextProvider>
         </View>
       </NavigationContainer>
     </ApolloProvider>
