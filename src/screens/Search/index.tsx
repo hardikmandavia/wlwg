@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-import { RegionContext, SummonerContext } from '../../contexts';
+import AppContext from '../../contexts';
 import { PropsWithNavigation, Routes } from '../../routes';
 
 import Logo from '../../components/Logo';
@@ -14,7 +14,8 @@ import { Input, Header } from './index.styled';
 type Props = PropsWithNavigation<{}, Routes.SEARCH>;
 
 const Home = ({ navigation }: Props) => {
-  const { region, setRegion } = RegionContext.useRegionContext();
+  const { regionState } = AppContext.useAppContext();
+  const { region, setRegion } = regionState;
 
   const [focussed, setFocus] = useState(false);
   const [name, setName] = useState('');
@@ -29,7 +30,7 @@ const Home = ({ navigation }: Props) => {
     setFocus(false);
   }
 
-  const handleSelect = (accountId: string, id: string) => navigation.navigate(Routes.SUMMONER, { accountId });
+  const handleSelect = (accountId: string) => navigation.navigate(Routes.SUMMONER, { accountId });
 
   useEffect(() => {
     if (focussed) {
@@ -75,14 +76,13 @@ const Home = ({ navigation }: Props) => {
         onChangeText={handleNameChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        autoCorrect={false}
       />
       {name > '' && !focussed && (
-        <SummonerContext.SummonerContextProvider>
-          <Results
-            name={name}
-            onSelect={handleSelect}
-          />
-        </SummonerContext.SummonerContextProvider>
+        <Results
+          name={name}
+          onSelect={handleSelect}
+        />
       )}
     </Screen>
   );

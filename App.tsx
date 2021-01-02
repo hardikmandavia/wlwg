@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Search from './src/screens/Search';
 import Summoner from './src/screens/MatchList';
 
-import { RegionContext } from './src/contexts';
+import AppContext from './src/contexts';
 import { RootStackParamList, Routes } from './src/routes';
 
 import { View } from './App.styled';
@@ -31,13 +31,12 @@ export default function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         <View>
-
-          <RegionContext.RegionContextProvider>
+          <AppContext.AppContextProvider>
             <Navigator headerMode="none">
               <Screen name={Routes.SEARCH} component={Search} />
               <Screen name={Routes.SUMMONER} component={Summoner} />
             </Navigator>
-          </RegionContext.RegionContextProvider>
+          </AppContext.AppContextProvider>
         </View>
       </NavigationContainer>
     </ApolloProvider>

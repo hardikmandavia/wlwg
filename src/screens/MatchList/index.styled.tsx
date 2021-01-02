@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { Screen as ScreenImported } from '../../components/Common';
+
 import { background } from '../../../colors';
 
 export const Container = styled.View`
@@ -11,3 +13,6 @@ export const Container = styled.View`
   background-color: ${background};
 `;
 
+export const Screen = styled(ScreenImported)`
+  padding: 0;
+`;

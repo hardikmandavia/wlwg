@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import { Screen } from '../../components/Common';
-
-import { RegionContext } from '../../contexts';
+import AppContext from '../../contexts';
 import { Routes, PropsWithNavigation } from '../../routes';
-import { useMatchListQuery, MatchListQuery } from '../../__generated__/types';
+import { useMatchListQuery, MatchReference, Summoner } from '../../__generated__/types';
 
 import { Text } from '../../components/Common';
+import Match from './Match';
 
-import { Container } from './index.styled';
+import { Container, Screen } from './index.styled';
 
 type Props = PropsWithNavigation<{}, Routes.SUMMONER>;
 
 const MatchList = ({ navigation, route }: Props) => {
-  const { region } = RegionContext.useRegionContext();
+  const { regionState, summonerState } = AppContext.useAppContext();
+  const { region } = regionState;
+  const { summoner } = summonerState;
+
   const { accountId } = route.params;
   const { data, loading, error } = useMatchListQuery({ variables: { region, accountId } });
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -34,17 +36,15 @@ const MatchList = ({ navigation, route }: Props) => {
     </Container>
   )
   if (!data || error) return renderNoData();
-  // const soloRankedMatchList = data.matchList.matches.filter(m => m.queue === 420);
-  // if (soloRankedMatchList.length === 0) return null;
-  return renderNoData();
+  if (data.matchList.matches.length === 0) return renderNoData();
 
-
-
-
+  const matchReference = data.matchList.matches[selectedIndex] as MatchReference;
 
   return (
     <Screen>
-      { }
+      <Container>
+        <Match matchReference={matchReference} />
+      </Container>
     </Screen>
   );
 };

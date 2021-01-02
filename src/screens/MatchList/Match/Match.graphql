@@ -1,0 +1,55 @@
+query Match($region: String!, $gameId: Float!) {
+  match(region: $region, gameId: $gameId) {
+    gameId
+    participantIdentities {
+      participantId
+      player {
+        accountId
+        summonerId
+        summonerName
+      }
+    }
+    participants {
+      participantId
+      championId
+      timeline {
+        creepsPerMin {
+          p0
+          p1
+          p2
+          p3
+        }
+        csDiffPerMin {
+          p0
+          p1
+          p2
+          p3
+        }
+        xpDiffPerMin {
+          p0
+          p1
+          p2
+          p3
+        }
+        damageTakenDiffPerMin {
+          p0
+          p1
+          p2
+          p3
+        }
+        lane
+        role
+      }
+      stats {
+        kills
+        deaths
+        assists
+        wardsPlaced
+        win
+        firstBloodKill
+        firstBloodAssist
+        totalMinionsKilled
+      }
+    }
+  }
+}

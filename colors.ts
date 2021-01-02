@@ -13,3 +13,5 @@ export const error = cinnabar;
 export const neutral = grey;
 export const text = gunmetal;
 export const textLight = white;
+export const win = blue;
+export const lose = cinnabar;
