@@ -5,7 +5,6 @@ import { Container } from '../index.styled';
 
 import { win, lose } from '../../../../colors';
 
-
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 export const ContentContainer = styled(Container)`
@@ -27,4 +26,20 @@ export const GradientView = styled(Container)`
   border-top-width: ${SCREEN_HEIGHT}px;
   border-right-width: ${SCREEN_WIDTH}px;
   border-right-color: ${lose};
+`;
+
+export const PlayerContainer = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: ${SCREEN_HEIGHT - 80}px;
+`;
+
+export const OpponentContainer = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end; 
+  height: ${SCREEN_HEIGHT - 80}px;
 `;

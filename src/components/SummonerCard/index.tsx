@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native';
 
 import { Summoner, LeagueEntry } from '../../__generated__/types';
 import { getSoloRanked, getIcon } from '../../selectors/ranked';
+import { VERSION } from '../../constants';
 
 import { Text } from '../Common';
 
@@ -36,7 +37,7 @@ const SummonerCard = ({ summoner, onSelect }: Props) => {
       <ResultContainer >
         <IconContainer>
           <Image
-            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/${summoner.profileIconId}.png` }}
+            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/${VERSION}/img/profileicon/${summoner.profileIconId}.png` }}
           />
           <LevelContainer>
             <Text color="light" size="small">

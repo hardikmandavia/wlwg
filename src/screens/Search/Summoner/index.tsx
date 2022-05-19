@@ -23,7 +23,7 @@ const Results = ({ name, onSelect }: Props) => {
   const { regionState, summonerState } = AppContext.useAppContext();
 
   const { region } = regionState;
-  const { summoner, setSummoner } = summonerState;
+  const { setSummoner } = summonerState;
 
   const { data, loading, error } = useSummonerQuery({ variables: { region, name } });
 

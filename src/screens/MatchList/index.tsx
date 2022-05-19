@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import AppContext from '../../contexts';
 import { Routes, PropsWithNavigation } from '../../routes';
 import { useMatchListQuery, MatchReference, Summoner } from '../../__generated__/types';
 
-import { Text } from '../../components/Common';
+import NoData from '../../components/NoData';
 import Match from './Match';
 
 import { Container, Screen } from './index.styled';
@@ -18,32 +17,33 @@ const MatchList = ({ navigation, route }: Props) => {
   const { region } = regionState;
   const { summoner } = summonerState;
 
+  if (!summoner) navigation.navigate("SEARCH");
+
   const { accountId } = route.params;
   const { data, loading, error } = useMatchListQuery({ variables: { region, accountId } });
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const renderNoData = () => {
-    return (
-      <Container>
-        <Icon name="info-circle" light style={{ marginRight: 10 }} />
-        <Text color="light">No data available</Text>
-      </Container>
-    );
-  }
   if (loading) return (
     <Container>
       <ActivityIndicator />
     </Container>
-  )
-  if (!data || error) return renderNoData();
-  if (data.matchList.matches.length === 0) return renderNoData();
+  );
+
+  if (!data || data.matchList.matches.length === 0 || error) return (
+    <Container>
+      <NoData />
+    </Container>
+  );
 
   const matchReference = data.matchList.matches[selectedIndex] as MatchReference;
 
   return (
     <Screen>
       <Container>
-        <Match matchReference={matchReference} />
+        <Match
+          matchReference={matchReference}
+          summoner={summoner as Summoner}
+        />
       </Container>
     </Screen>
   );

@@ -130,12 +130,20 @@ export type Participant = {
   __typename?: 'Participant';
   participantId: Scalars['Float'];
   championId: Scalars['Float'];
+  champion?: Maybe<Champion>;
   stats: ParticipantStats;
   teamId: Scalars['Float'];
   timeline: ParticipantTimeline;
   spell1Id: Scalars['Float'];
   spell2Id: Scalars['Float'];
   highestAchievedSeasonTier?: Maybe<Scalars['String']>;
+};
+
+export type Champion = {
+  __typename?: 'Champion';
+  id: Scalars['String'];
+  key: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type ParticipantStats = {
@@ -294,8 +302,11 @@ export type MatchQuery = (
       ) }
     )>, participants: Array<(
       { __typename?: 'Participant' }
-      & Pick<Participant, 'participantId' | 'championId'>
-      & { timeline: (
+      & Pick<Participant, 'teamId' | 'participantId' | 'championId'>
+      & { champion?: Maybe<(
+        { __typename?: 'Champion' }
+        & Pick<Champion, 'name' | 'key' | 'id'>
+      )>, timeline: (
         { __typename?: 'ParticipantTimeline' }
         & Pick<ParticipantTimeline, 'lane' | 'role'>
         & { creepsPerMin: (
@@ -369,8 +380,14 @@ export const MatchDocument = gql`
       }
     }
     participants {
+      teamId
       participantId
       championId
+      champion {
+        name
+        key
+        id
+      }
       timeline {
         creepsPerMin {
           p0

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import { neutral, secondary, background } from '../../../colors';
+import { secondary, background } from '../../../colors';
 
 const Container = styled.View`
   margin: 10px;

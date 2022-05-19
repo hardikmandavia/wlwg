@@ -10,8 +10,14 @@ query Match($region: String!, $gameId: Float!) {
       }
     }
     participants {
+      teamId
       participantId
       championId
+      champion {
+        name
+        key
+        id
+      }
       timeline {
         creepsPerMin {
           p0
